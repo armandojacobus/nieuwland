@@ -47,8 +47,8 @@
       }
     })
       .then(response => {
-        console.log(response.json())
         var responseClone = response.clone()
+        console.log(responseClone.json())
         responseClone.json()
       })
       .then(data => {
