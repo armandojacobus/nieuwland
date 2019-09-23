@@ -45,7 +45,7 @@
     //       Het enige dat van belang is, is dat wgp.initViewer met een geldig
     //       configuratie-object wordt aangeroepen.
     wgp.setWgpServerUrl('https://jam-it.webgis.nl');
-
+    log('Kaart' + mapName);
     log('Kaartconfiguratie wordt opgehaald...');
     wgp.fetchMapConfig(workspaceName, mapName).then(function (mapConfig) {
       var containerElement = document.getElementById('map-container');
