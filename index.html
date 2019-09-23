@@ -33,7 +33,13 @@
     // Noot: een geldig JWT token zetten is nodig als:
     // * De kaart niet publiek toegankelijk is en een inlog vereist.
     // * Of de kaart lagen bevat die via de WGP 5 proxy lopen.
-    var jwtToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1Njg2NTQ5MTksImV4cCI6MTU2ODY2MjExOSwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFqYWNvYnVzIn0.Tkw0EYkwKD1t8dDZEK5yJ0WwqQbQzneW3grqxKB3XhxJGm9SLtgv5yaOha6cg3jqqf4NUAS45xn5Gz83vw_sJX62CoSrQNyTMJf6HicSQO7EhFFeFbkbxsKffadwfkUWl0kZMiGZCBQuy-INmc5XUkzs3VDmOIk0c6a22wch5cxPaXQVv4JeSZ5RP33qYNY_-QO_HgQ3xoHWa49DtobpyyWunC-NWAE5Zcb1GMDgvhdTv42-Isj2uurBhkVQJMfIrjJ0fQN37BFCDYESCl8fyKi9PZLuN38gXNn4oho75oBEPij38yXhSOJ4YhKOsbSahwilgSBmtTlExz-b_rQDlliNHEQ61yZmxK6v-tTh6loSUfNTxcEpEFHEEbSNYu3eo2BZcCMGJYHcAU63Oyj6n9UFlLhFuq0lUtOWgZJuGKHP9CDz40dcREfJqOeR_PUQ80_jARpgQfwiN18wGT8DeeAq4z_XTRcWrTKdg98NIpg9Q1AhsRUMmo38JSX8uVqGJ6JgQwFKu0NoRuOC-4HL1g-b4T0bzyBV4lM-viLeywUYuUfYq4gax-fKBOxza_rjaE-gptW8HLIksinEqCIsCJ21lODn6fZyRw4pZV4r09YLaBj518qyxnFggLPFJVP-dItIXwpgMgn12sNynmsC9qm00Rwz-9oaSiXcgJj7ohM';
+
+
+    var jwtToken = fetch("https://jam-it.webgis.nl/api/login_check", {
+      "username": "ajacobus",
+      "password": "CgZxXKiUEtnc4sY"
+    }).then(response => { return response })
+    console.log(jwtToken);
     wgp.setJwtToken(jwtToken);
 
     // Initialiseer pad naar library scripts.
