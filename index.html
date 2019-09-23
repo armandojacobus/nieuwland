@@ -36,12 +36,13 @@
 
 
     var jwtToken = fetch("https://jam-it.webgis.nl/api/login_check", {
-      method: 'PUT',
+      method: 'Post',
       body: JSON.stringify({
         username: "ajacobus",
         password: "CgZxXKiUEtnc4sY"
       }),
       headers: {
+        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       }
     })
