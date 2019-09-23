@@ -47,7 +47,7 @@
       }
     })
       .then(response => {
-        response.json();
+        response.body.json();
       })
       .then(data => {
         console.log(data)
