@@ -40,8 +40,16 @@
       body: JSON.stringify({
         "username": "ajacobus",
         "password": "CgZxXKiUEtnc4sY"
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => { console.log(response) })
+      .then(data => {
+        console.log(data)
+        return data
       })
-    }).then(response => { return response })
     console.log(jwtToken);
     wgp.setJwtToken(jwtToken);
 
