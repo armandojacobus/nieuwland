@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Demo integratie WGP 5 viewer</title>
+  <link rel="stylesheet" type="text/css" href="./example.css">
+  <!-- Noot: include WGP 5 css ná evt. eigen css. -->
+  <link rel="stylesheet" type="text/css" href="./lib/css/viewer.css">
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <h2>Voorbeeld integratie WGP 5 viewer</h2>
+    <div class="example-wrapper">
+      <div class="example-container">
+        <div>
+          <h4>Log box: <button id="btn-clear-log-box">Wis log</button></h4>
+          <div id="log-box"></div>
+        </div>
+      </div>
+      <div id="map-container"></div>
+    </div>
+  </div>
+  <script type="text/javascript" src="./lib/js/wgp-viewer.js"></script>
+  <script type="text/javascript">
+    var workspaceName = 'jam-it';
+    var mapName = 'voorbeeldkaart-1';
+
+    // Noot: een geldig JWT token zetten is nodig als:
+    // * De kaart niet publiek toegankelijk is en een inlog vereist.
+    // * Of de kaart lagen bevat die via de WGP 5 proxy lopen.
+    var jwtToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1Njg2NTQ5MTksImV4cCI6MTU2ODY2MjExOSwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFqYWNvYnVzIn0.Tkw0EYkwKD1t8dDZEK5yJ0WwqQbQzneW3grqxKB3XhxJGm9SLtgv5yaOha6cg3jqqf4NUAS45xn5Gz83vw_sJX62CoSrQNyTMJf6HicSQO7EhFFeFbkbxsKffadwfkUWl0kZMiGZCBQuy-INmc5XUkzs3VDmOIk0c6a22wch5cxPaXQVv4JeSZ5RP33qYNY_-QO_HgQ3xoHWa49DtobpyyWunC-NWAE5Zcb1GMDgvhdTv42-Isj2uurBhkVQJMfIrjJ0fQN37BFCDYESCl8fyKi9PZLuN38gXNn4oho75oBEPij38yXhSOJ4YhKOsbSahwilgSBmtTlExz-b_rQDlliNHEQ61yZmxK6v-tTh6loSUfNTxcEpEFHEEbSNYu3eo2BZcCMGJYHcAU63Oyj6n9UFlLhFuq0lUtOWgZJuGKHP9CDz40dcREfJqOeR_PUQ80_jARpgQfwiN18wGT8DeeAq4z_XTRcWrTKdg98NIpg9Q1AhsRUMmo38JSX8uVqGJ6JgQwFKu0NoRuOC-4HL1g-b4T0bzyBV4lM-viLeywUYuUfYq4gax-fKBOxza_rjaE-gptW8HLIksinEqCIsCJ21lODn6fZyRw4pZV4r09YLaBj518qyxnFggLPFJVP-dItIXwpgMgn12sNynmsC9qm00Rwz-9oaSiXcgJj7ohM';
+    wgp.setJwtToken(jwtToken);
+
+    // Initialiseer pad naar library scripts.
+    // Deze is nodig opdat wgp de vertaalbestanden en image assets kan vinden.
+    wgp.setAssetBaseUrl('./lib/');
+
+    // Haal kaartconfiguratie op via WGP API.
+    // Noot: kaartconfiguratie ophalen hoeft niet per se in de viewer te gebeuren.
+    //       Het enige dat van belang is, is dat wgp.initViewer met een geldig
+    //       configuratie-object wordt aangeroepen.
+    wgp.setWgpServerUrl('https://jam-it.webgis.nl');
+
+    log('Kaartconfiguratie wordt opgehaald...');
+    wgp.fetchMapConfig(workspaceName, mapName).then(function (mapConfig) {
+      var containerElement = document.getElementById('map-container');
+      wgp.initViewer(mapConfig, containerElement).then(function (api) {
+        // Voeg api-instance toe aan global scope om er mee te kunnen spelen in de dev console.
+        window.api = api;
+        log('Viewer geïnitialiseerd. Api is klaar voor gebruik.');
+
+        // Voorbeeld api-gebruik: zoom naar coördinaat en zoomlevel.
+        api.map.setCenter([102030, 431122], { zoom: 14 });
+      });
+    }).catch(function (err) {
+      log('Fout bij ophalen kaartconfig: ' + err, 'error');
+    });
+
+    function log(message, messageClass) {
+      var messageNode = document.createElement('div');
+      messageNode.innerHTML = message;
+      messageNode.classList.add('message');
+      if (messageClass) {
+        messageNode.classList.add(messageClass);
+      }
+
+      var logbox = document.getElementById('log-box');
+      logbox.appendChild(messageNode);
+
+      var scrollHeight = logbox.scrollHeight;
+      logbox.scrollTop = scrollHeight;
+    }
+  </script>
+</body>
+
+</html>
