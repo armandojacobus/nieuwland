@@ -48,7 +48,8 @@
     })
       .then(response => {
         console.log(response.json())
-        response.json()
+        var responseClone = response.clone()
+        responseClone.json()
       })
       .then(data => {
         console.log(data)
