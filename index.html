@@ -35,7 +35,7 @@
     // * Of de kaart lagen bevat die via de WGP 5 proxy lopen.
 
 
-    var jwtToken = fetch("https://jam-it.webgis.nl/api/login_check", {
+    var jwtToken = fetch("https://cors.io/?https://jam-it.webgis.nl/api/login_check", {
       method: 'POST',
       body: JSON.stringify({
         username: "ajacobus",
