@@ -35,14 +35,14 @@
     // * Of de kaart lagen bevat die via de WGP 5 proxy lopen.
 
 
-    var jwtToken = fetch("https://crossorigin.me/https://jam-it.webgis.nl/api/login_check", {
+    var jwtToken = fetch("https://cors-anywhere.herokuapp.com/https://jam-it.webgis.nl/api/login_check", {
       method: 'POST',
       body: JSON.stringify({
         username: "ajacobus",
         password: "CgZxXKiUEtnc4sY"
       }),
       headers: {
-        'Access-Control-Allow-Origin': '*',
+        'origin': 'https://armandojacobus.github.io/nieuwland.github.io/',
         'Content-Type': 'application/json'
       }
     })
