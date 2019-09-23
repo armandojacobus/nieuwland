@@ -47,12 +47,12 @@
       }
     })
       .then(response => {
-        response.token.json();
+        response.text();
       })
       .then(data => {
-        console.log(data)
         return data
       })
+
     wgp.setJwtToken(jwtToken);
 
     // Initialiseer pad naar library scripts.
